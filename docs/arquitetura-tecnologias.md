@@ -1,13 +1,5 @@
 # Arquitetura e Tecnologias
 
-## Diretriz sobre "indetectável"
-Para manter o projeto sustentável e alinhado a uso permitido:
-- Não implementar técnicas de evasão de anti-cheat.
-- Não usar drivers/kernel hooks/injeções ocultas.
-- Preferir integração explícita e observável.
-
-No contexto de OTServer com uso autorizado, a melhor estratégia é **compatibilidade + estabilidade**, não ocultação.
-
 ## Stack recomendada
 
 ### Linguagem principal: **Python 3.12+**
