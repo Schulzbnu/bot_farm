@@ -1,0 +1,12 @@
+[project]
+name = "bot-farm"
+version = "0.1.0"
+description = "Bot autorizado para OTServer com navegação por radar"
+requires-python = ">=3.12"
+dependencies = [
+  "opencv-python>=4.10.0.84",
+  "numpy>=2.1.0",
+]
+
+[tool.setuptools]
+packages = ["bot"]
