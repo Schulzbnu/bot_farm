@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+.venv/
+TXT && git add .gitignore bot tests && git commit --amend -m "Implementa navegação por waypoint com UI de seleção de regiões"

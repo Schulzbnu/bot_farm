@@ -20,9 +20,9 @@
 - Matching por template/cores
 - Mantém o bot desacoplado de memória/processo (mais seguro e simples)
 
-### Input/controle: **pynput/pyautogui (camada abstrata própria)**
+### Input/controle: **pynput (camada abstrata própria)**
 **Por quê:**
-- Controle de teclado/mouse com API simples
+- Controle de teclado com API simples
 - Permite encapsular delays, retries e perfis
 
 ### Configuração: **YAML**
@@ -37,34 +37,39 @@
 
 ## Arquitetura em módulos
 1. **Core FSM (Finite State Machine)**
-   - Estados: `HUNTING`, `LOOTING`, `REFILLING`, `DEPOTING`, `ESCAPE`, `IDLE`
+   - Estados previstos: `HUNTING`, `LOOTING`, `REFILLING`, `DEPOTING`, `ESCAPE`, `IDLE`
 2. **Perception Layer**
-   - Leitura de HUD/vida/mana/alvos via OCR/template matching
+   - Leitura inicial por detecção de cores no minimapa
 3. **Decision Layer**
-   - Regras declarativas por prioridade e contexto
+   - Conversão de posição relativa do waypoint em direção de movimento
 4. **Action Layer**
-   - Executor de teclas/mouse com fila e confirmação
+   - Executor de teclas (`WASD`) com tempo de pressionamento configurável
 5. **Profile System**
-   - Configs por personagem, cidade, supplies e rota
+   - Próxima etapa: persistência de perfis e áreas em YAML
 6. **Safety Layer**
-   - Timeouts, watchdog, hotkey de parada, anti-loop
+   - Próxima etapa: hotkey de parada, timeout e watchdog
+
+## Implementação atual (MVP de navegação)
+- `bot/ui/main_window.py`: UI principal com seleção de regiões e controle de execução.
+- `bot/ui/region_selector.py`: overlay para escolher posição e tamanho da área.
+- `bot/perception/minimap_detector.py`: captura e detecção de player/waypoint em HSV.
+- `bot/navigation/waypoint_navigator.py`: decisão de movimento por distância relativa.
+- `bot/action/keyboard_controller.py`: envio de teclas.
 
 ## Decisões importantes para “uso simples”
-- Instalador único (PyInstaller)
-- Perfil guiado por wizard inicial
-- “Modo teste” com overlay de debug
-- Botão de emergência (kill switch)
+- Fluxo de uso em 3 passos: selecionar tela do jogo, selecionar minimapa, iniciar.
+- Dependências conhecidas e fáceis de instalar por `pip`.
+- Sem leitura de memória/processo: somente visão da tela e simulação de teclado.
 
-## Estrutura inicial de pastas (proposta)
+## Estrutura inicial de pastas
 ```text
 bot/
-  core/
-  perception/
-  decision/
   action/
-  profiles/
+  core/
+  navigation/
+  perception/
   ui/
-  infra/
 configs/
 docs/
+tests/
 ```
