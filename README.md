@@ -33,12 +33,38 @@ Foi adicionada uma base funcional em Python com:
 ### Estrutura
 ```text
 bot/
+  cli.py
   input/keyboard.py
   navigation/
     radar.py
     pathfinding.py
     map_repository.py
   tasks/walk_tasks.py
+tests/
+```
+
+## Como executar
+### 1) Criar ambiente e instalar dependências
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
+```
+
+### 2) Rodar um teste rápido de pathfinding
+```bash
+python -m bot pathfinding --current 100 100 7 --goal 105 100 7 --blocked 101 100 7
+```
+
+### 3) Instalar mapas do radar
+#### Opção A: pasta local
+```bash
+python -m bot install-maps --source-folder ./meus_mapas
+```
+
+#### Opção B: zip do GitHub
+```bash
+python -m bot install-maps --github-zip https://github.com/org/repo/archive/refs/heads/main.zip
 ```
 
 ## Mapas do radar: pasta local ou GitHub?
@@ -47,7 +73,7 @@ Você pode usar as duas opções:
 1. **Colocar os arquivos manualmente na pasta** `bot/assets/maps`.
 2. **Baixar do GitHub** via `.zip` usando `install_maps_from_github_zip(...)`.
 
-Exemplo rápido:
+Exemplo rápido em Python:
 ```python
 from pathlib import Path
 from bot.navigation.map_repository import install_maps_from_folder, install_maps_from_github_zip
